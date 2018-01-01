@@ -2,14 +2,19 @@ import csv
 import wpilib
 import numpy
 
+# with moving average taps=1, I get mean=170 microseconds, std dev=9 microseconds
 # with moving average taps=4, I get mean=180 microseconds, std dev=12 microseconds
 # with moving average taps=40, I get mean=320 microseconds, std dev=16 microseconds
 # with moving average taps=400, I get mean=1.7 microseconds, std dev=44 microseconds
 
 # numpy based filter
+# with moving average taps=1, I get mean=230 microseconds, std dev=12 microseconds
 # with moving average taps=4, I get mean=230 microseconds, std dev=12 microseconds
 # with moving average taps=40, I get mean=240 microseconds, std dev=12 microseconds
 # with moving average taps=400, I get mean=300 microseconds, std dev=14 microseconds
+
+# collectionless filter
+# with moving average taps=1, I get mean=130 microseconds, std dev=8 microseconds
 data = []
 with open('data.csv', 'r') as f:
     reader = csv.reader(f)
@@ -31,7 +36,7 @@ def get_datum():
     i += 1
     return fps
 
-filter = wpilib.LinearDigitalFilter.movingAverage(get_datum, 4)
+filter = wpilib.LinearDigitalFilter.movingAverage(get_datum, 1)
 
 ts = data[:, 0]
 i = 0
